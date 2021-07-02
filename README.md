@@ -12,7 +12,7 @@ This repository contains primary source code for *"Overexpression of CRNDE in gl
 
 ## Introduction
 
-Glioblastoma (GBM) is the most common and malignant brain malignancy worldwide with a 10-year survival of only *0.7%*. Aggressive multimodal treatment is not enough to increase life expectancy and provide good quality of life for glioblastoma patients. In addition, despite decades of research, there are no established biomarkers for early disease diagnosis and monitoring of patient response to treatment. High throughput sequencing technologies allow for identification of molecules from large clinically annotated datasets.
+Glioblastoma (GBM) is the most common and malignant brain malignancy worldwide with a 10-year survival __of only *0.7%*__. Aggressive multimodal treatment is not enough to increase life expectancy and provide good quality of life for glioblastoma patients. In addition, despite decades of research, there are no established biomarkers for early disease diagnosis and monitoring of patient response to treatment. High throughput sequencing technologies allow for identification of molecules from large clinically annotated datasets.
 
 Thus, the aim of our study was to identify significant molecular changes between short- and long-term glioblastoma survivors by transcriptome RNA sequencing profiling using previous data from the publicly available repositories [The Cancer Genome Atlas](https://www.cancer.gov/about-nci/organization/ccg/research/structural-genomics/tcga) *(TCGA; number of annotated cases = 135)* and [Chinese Glioma Genome Atlas](http://www.cgga.org.cn/) *(CGGA; number of annotated cases = 218)*, and using experimental clinically annotated GBM tissue samples from the Institute of Pathology, Faculty of medicine in Ljubljana corresponding to 2-50 months overall survival (*n = 16*).
 
@@ -21,13 +21,12 @@ We identified overlapping sets of congruently regulated differential genes invol
 ## 📝 Requirements
 
 Main dependencies are:
-* TCGAbiolinks
-* GEOquery
-* preprocessCore
-* ROCR
-* DESeq2
-* biomaRt
-* pacman
+* TCGAbiolinks >= 2.16.4
+* GEOquery >= 2.56.0
+* preprocessCore >= 1.50.0
+* ROCR >= 1.0.11
+* biomaRt >= 2.44.4
+* pacman >= 0.5.1
 
 Other (minor) dependecies will be automatically installed if they are missing by `pacman` package within an execution of source scripts.
 
