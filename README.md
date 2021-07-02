@@ -41,4 +41,4 @@ Please feel free to contact Mikhail Raevskiy (raevskii.mm@phystech.edu) if you h
 
 ## 📃 License
 
-This project is [Apache 2.0](https://github.com/raevskymichail/CRNDE_glioblastoma/blob/master/LICENSE) licensed.
+This project is [Apache 2.0](https://github.com/raevskymichail/CRNDE_glioblastoma/blob/main/LICENSE) licensed.
