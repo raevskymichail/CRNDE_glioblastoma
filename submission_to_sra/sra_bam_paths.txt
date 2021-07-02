@@ -1,0 +1,16 @@
+/home/mraevsky/LTS_vs_STS_manuscript/exp_data_bam/GB-1_S11_R1_001Aligned.sortedByCoord.out.bam
+/home/mraevsky/LTS_vs_STS_manuscript/exp_data_bam/GB_10_S5_R1_001Aligned.sortedByCoord.out.bam
+/home/mraevsky/LTS_vs_STS_manuscript/exp_data_bam/GB_11_S6_R1_001Aligned.sortedByCoord.out.bam
+/home/mraevsky/LTS_vs_STS_manuscript/exp_data_bam/GB_15_S7_R1_001Aligned.sortedByCoord.out.bam
+/home/mraevsky/LTS_vs_STS_manuscript/exp_data_bam/GB_13_S12_R1_001Aligned.sortedByCoord.out.bam
+/home/mraevsky/LTS_vs_STS_manuscript/exp_data_bam/GB_16_S8_R1_001Aligned.sortedByCoord.out.bam
+/home/mraevsky/LTS_vs_STS_manuscript/exp_data_bam/GB_17_S9_R1_001Aligned.sortedByCoord.out.bam
+/home/mraevsky/LTS_vs_STS_manuscript/exp_data_bam/GB_18_S10_R1_001Aligned.sortedByCoord.out.bam
+/home/mraevsky/LTS_vs_STS_manuscript/exp_data_bam/GB_19_S17_R1_001Aligned.sortedByCoord.out.bam
+/home/mraevsky/LTS_vs_STS_manuscript/exp_data_bam/GB_2_S4_R1_001Aligned.sortedByCoord.out.bam
+/home/mraevsky/LTS_vs_STS_manuscript/exp_data_bam/GB_3_S5_R1_001Aligned.sortedByCoord.out.bam
+/home/mraevsky/LTS_vs_STS_manuscript/exp_data_bam/GB_4_S6_R1_001Aligned.sortedByCoord.out.bam
+/home/mraevsky/LTS_vs_STS_manuscript/exp_data_bam/GB_5_S5_R1_001Aligned.sortedByCoord.out.bam
+/home/mraevsky/LTS_vs_STS_manuscript/exp_data_bam/GB_6_S9_R1_001Aligned.sortedByCoord.out.bam
+/home/mraevsky/LTS_vs_STS_manuscript/exp_data_bam/GB_7_S10_R1_001Aligned.sortedByCoord.out.bam
+/home/mraevsky/LTS_vs_STS_manuscript/exp_data_bam/GB_8_S4_R1_001Aligned.sortedByCoord.out.bam
