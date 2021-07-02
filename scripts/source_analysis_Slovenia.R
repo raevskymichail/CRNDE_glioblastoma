@@ -1,24 +1,23 @@
 library("TCGAbiolinks")
-library(GEOquery)
-library(tidyr)
-library(preprocessCore)
-library(ROCR)
-library(DESeq2)
-library(biomaRt)
+library("GEOquery")
+library("preprocessCore")
+library("ROCR")
+library("biomaRt")
+library("pacman")
 
 pacman::p_load("magrittr", "stringr", "readr", "stringr", "openxlsx", "readxl", "FactoMineR", "factoextra", "ggplot2",
                "ggpubr", "grid", "gridExtra", "ggdendro", "dendroextras", "ggthemes", "plyr", "dplyr", "tidyr", "venn", "pca3d", "survival",
                "survminer", "XML", "methods", "rvest", "scales")
 
-source("C:/Users/raevs/Desktop/Oncobox/LTS_vs_STS_manuscript/scripts/preprocessing.R", chdir = TRUE)
-source("C:/Users/raevs/Desktop/Oncobox/LTS_vs_STS_manuscript/scripts/visualization.R", chdir = TRUE)
+source("./scripts/preprocessing.R", chdir = TRUE)
+source("./scripts/visualization.R", chdir = TRUE)
 
-dataFolder <- "C:/Users/raevs/Desktop/Oncobox/LTS_vs_STS_manuscript/gliomas_pathways_PFS/"
+dataFolder <- "./gliomas_pathways_PFS/"
 setwd(dataFolder)
 
-hgnc <- read_tsv("C:/Users/raevs/Desktop/Oncobox/LTS_vs_STS_manuscript/gliomas_pathways_PFS/hgnc_complete_set.txt", col_names = TRUE)
-our_pathways <- read.xlsx("C:/Users/raevs/Desktop/Oncobox/LTS_vs_STS_manuscript/gliomas_pathways_PFS/number_of_genes_in_pathways.xlsx")
-dat_oncobox <- read_delim("C:/Users/raevs/Desktop/Oncobox/LTS_vs_STS_manuscript/exp_data/slovenia_exp_matrix.txt",
+hgnc <- read_tsv("./hgnc_complete_set.txt", col_names = TRUE)
+our_pathways <- read.xlsx("./number_of_genes_in_pathways.xlsx")
+dat_oncobox <- read_delim("./exp_data/slovenia_exp_matrix.txt",
         "\t", escape_double = FALSE, trim_ws = TRUE)
 our_genes <- dat_oncobox$SYMBOL
 
@@ -77,8 +76,6 @@ idh_statuses = na.omit(idh_statuses)
 write.xlsx(idh_statuses, 'idh_statuses_LGG_TCGA.xlsx')
 
 data = read_tsv('gdc_download_20201117_132227.209144/3bba81d3-f253-42ea-b9eb-72bc8641fd69/nationwidechildrens.org_clinical_follow_up_v1.0_lgg.txt')
-data = read_tsv('C:/Users/raevs/Desktop/Oncobox/LTS_vs_STS_manuscript/gliomas_pathways_PFS/gdc_download_20201117_132243.033093/c9cdbc76-105d-429b-9fce-f000819716f9/nationwidechildrens.org_clinical_follow_up_v1.0_gbm.txt')
-data = read_tsv('C:/Users/raevs/Desktop/Oncobox/LTS_vs_STS_manuscript/gliomas_pathways_PFS/gdc_download_20201117_132251.493810/86a66df6-0e51-4555-81ed-fbd2b245de94/nationwidechildrens.org_clinical_follow_up_v1.0_nte_gbm.txt')
 
 data_lgg = data[3:nrow(data),]
 data_lgg = data_lgg[, c('bcr_patient_barcode', 'bcr_followup_barcode', 'death_days_to')]
@@ -98,9 +95,9 @@ data_lgg[(data_lgg$death_days_to=="[Not Applicable]")|(data_lgg$death_days_to=="
 
 data_lgg = data_lgg[(data_lgg$death_days_to != "[Not Applicable]") & (data_lgg$death_days_to != "[Discrepancy]") & (data_lgg$death_days_to != "[Not Available]"), c('bcr_patient_barcode', 'death_days_to')]
 data_lgg = data_lgg[(data_lgg$new_tumor_event_dx_days_to != "[Not Applicable]") & (data_lgg$new_tumor_event_dx_days_to != "[Not Available]"), c('bcr_patient_barcode', 'new_tumor_event_dx_days_to')]
-idh_data=read_excel('C:/Users/raevs/Desktop/Oncobox/LTS_vs_STS_manuscript/primary_vs_recurrent_new/miRNA_exprs_IDH_survival.xlsx')
-idh_data=read_excel('C:/Users/raevs/Desktop/Oncobox/LTS_vs_STS_manuscript/primary_vs_recurrent_new/mutations.xlsx')
-idh_data_new=read_excel('C:/Users/raevs/Desktop/Oncobox/LTS_vs_STS_manuscript/gliomas_pathways_PFS/mutations_GBM_mgmt.xlsx')
+idh_data=read_excel('./miRNA_exprs_IDH_survival.xlsx')
+idh_data=read_excel('./mutations.xlsx')
+idh_data_new=read_excel('./mutations_GBM_mgmt.xlsx')
 idh_data=read_excel('mutations_LGG.xlsx')
 patients_needed_idh_mut=idh_data[!is.na(idh_data$overall_status),'barcode']$barcode
 patients_needed_idh_wt=idh_data[is.na(idh_data$overall_status),'barcode']$barcode
@@ -122,7 +119,7 @@ data_lgg$death_days_to = as.numeric(as.character(data_lgg$death_days_to))
 data_lgg = na.omit(data_lgg)
 data_lgg = aggregate(. ~ bcr_patient_barcode, data = data_lgg, FUN = min)
 
-dat_TCGA = read.csv('C:/Users/raevs/Desktop/Oncobox/LTS_vs_STS_manuscript/gliomas_pathways_PFS/TCGA_read_counts.csv', row.names = 1)
+dat_TCGA = read.csv('./TCGA_read_counts.csv', row.names = 1)
 colnames(dat_TCGA) = str_replace_all(colnames(dat_TCGA), pattern = '[.]', replacement = '-')
 exprs_lgg = dat_TCGA[, !is.na(match(str_sub(colnames(dat_TCGA), end = 1L + 11), data_lgg$bcr_patient_barcode))]
 exprs_annotation = data.frame(bcr_patient_barcode = str_sub(colnames(exprs_lgg), end = 1L + 11),
@@ -159,7 +156,7 @@ pathways = read_csv('CGGA_325_primary_GBM_OS_PAS2.csv')
 # pathways = read_csv('CGGA_693_primary_GBM_OS_PAS2.csv')
 pathways$Database = NULL
 
-our_pathways = read.xlsx("C:/Users/raevs/Desktop/Oncobox/LTS_vs_STS_manuscript/gliomas_pathways_PFS/number_of_genes_in_pathways.xlsx")
+our_pathways = read.xlsx("./number_of_genes_in_pathways.xlsx")
 pathways = pathways[!is.na(match(pathways$Pathway, our_pathways$pathway)),]
 p = pathways$Pathway
 pathways$Pathway = NULL
@@ -541,7 +538,7 @@ annotation$`Oncobox ID` = str_remove_all(annotation$`Oncobox ID`, "_")
 annotation <- as.data.frame(annotation)
 row.names(annotation) = annotation$`Oncobox ID`
 
-dat_oncobox <- read_delim("C:/Users/raevs/Desktop/Oncobox/LTS_vs_STS_manuscript/exp_data/slovenia_exp_matrix.txt",
+dat_oncobox <- read_delim("./exp_data/slovenia_exp_matrix.txt",
         "\t", escape_double = FALSE, trim_ws = TRUE)
 colnames(dat_oncobox) <- c("SYMBOL", names)
 p = dat_oncobox$SYMBOL
@@ -1011,15 +1008,15 @@ TCGA <- read_csv('counts_gbm_TCGA.csv')
 CGGA_325 <- read_csv('counts_CGGA_325_GBM_OS.csv')
 CGGA_693 <- read_csv('counts_CGGA_693_GBM_OS.csv')
 Mainz <- read_csv('Mainz_counts_.csv')
-# dat_oncobox <- read_csv('C:/Users/raevs/Desktop/Oncobox/LTS_vs_STS_manuscript/CNV/oncobox_read_counts_ALL.csv')
-dat_oncobox <- read_delim("C:/Users/raevs/Desktop/Oncobox/LTS_vs_STS_manuscript/exp_data/slovenia_exp_matrix.txt",
+# dat_oncobox <- read_csv('./CNV/oncobox_read_counts_ALL.csv')
+dat_oncobox <- read_delim("./exp_data/slovenia_exp_matrix.txt",
         "\t", escape_double = FALSE, trim_ws = TRUE)
 p <- dat_oncobox$SYMBOL
 dat_oncobox <- as.data.frame(dat_oncobox)
 dat_oncobox$SYMBOL <- NULL
 row.names(dat_oncobox) <- p
 
-metadata <- read_excel('C:/Users/raevs/Desktop/Oncobox/LTS_vs_STS_manuscript/gliomas_pathways_PFS/our_glioblastoma.xlsx')
+metadata <- read_excel('./our_glioblastoma.xlsx')
 names <- metadata[str_detect(metadata$`Sample source`, 'glioblastoma') | str_detect(metadata$`Sample source`, 'Glioblastoma'), 'RNAseq file name']$`RNAseq file name`
 names <- unique(na.omit(names))
 names <- str_sub(names, end = -1L - 9)
@@ -1064,7 +1061,7 @@ all_normalized_quantiles = as.data.frame(normalize.quantiles(as.matrix(all[, !co
 all_pathways = read_excel('all.xlsx', sheet = 2)
 all_pathways$Database = NULL
 
-our_pathways = read.xlsx("C:/Users/raevs/Desktop/Oncobox/LTS_vs_STS_manuscript/gliomas_pathways_PFS/number_of_genes_in_pathways.xlsx")
+our_pathways = read.xlsx("./number_of_genes_in_pathways.xlsx")
 all_pathways = all_pathways[!is.na(match(all_pathways$Pathway, our_pathways$pathway)),]
 p = all_pathways$Pathway
 all_pathways$Pathway = NULL
@@ -1081,7 +1078,7 @@ pca_plot_by_gene_exp <- plot_pca(data_for_pca = t(log10(all_normalized_quantiles
 
 export_analysis_plot(filename = "pca_plot_by_gene_exp",
                      plot = pca_plot_by_gene_exp + scale_four_colour_Publication(),
-                     path = "C:/Users/raevs/Desktop/Oncobox/LTS_vs_STS_manuscript/plots/pca",
+                     path = "./plots/pca",
                      scale = 1,
                      width = 210 / 1.85,
                      height = 297 / 2.65,
@@ -1097,7 +1094,7 @@ pca_plot_by_pathways_scores <- plot_pca(data_for_pca = t(all_pathways))
 
 export_analysis_plot(filename = "pca_plot_by_pathways_scores",
                      plot = pca_plot_by_pathways_scores + xlim(-100, 100) + ylim(-100, 100) + scale_four_colour_Publication(),
-                     path = "C:/Users/raevs/Desktop/Oncobox/LTS_vs_STS_manuscript/plots/pca",
+                     path = "./plots/pca",
                      scale = 1,
                      width = 210 / 1.85,
                      height = 297 / 2.65,
